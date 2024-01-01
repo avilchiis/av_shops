@@ -53,7 +53,9 @@ function giveItems(src,itemList)
     elseif Config.Framework == "ESX" then
         local xPlayer = ESX.GetPlayerFromId(src)
         if xPlayer then
-            xPlayer.addInventoryItem(v['name'],v['amount'])
+            for _, v in pairs(itemList) do
+                xPlayer.addInventoryItem(v['name'], v['amount'])
+            end
         end
     end
 end
