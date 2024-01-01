@@ -9,11 +9,7 @@ end
 function getMoney(src, account)
     if Config.Framework == "QBCore" then
         local Player = QBCore.Functions.GetPlayer(src)
-        if Config.UsingCustomCrypto and Config.CustomCryptos[account] then
-            return Player.PlayerData.metadata.crypto[account]
-        else
-            return Player.PlayerData.money[account]
-        end
+        return Player.PlayerData.money[account]
     elseif Config.Framework == "ESX" then
         local xPlayer = ESX.GetPlayerFromId(src)
         if xPlayer and xPlayer.getAccount(account) then
@@ -28,14 +24,7 @@ end
 function removeMoney(src, account, amount)
     if Config.Framework == "QBCore" then
         local Player = QBCore.Functions.GetPlayer(src)
-        if Config.UsingCustomCrypto and Config.CustomCryptos[account] then
-            local Crypto = Player.PlayerData.metadata.crypto
-            if not Crypto[account] then return end
-            Crypto[account] = Crypto[account] - amount
-            Player.Functions.SetMetaData("crypto", Crypto)
-        else
-            Player.Functions.RemoveMoney(account,amount)
-        end
+        Player.Functions.RemoveMoney(account,amount)
     elseif Config.Framework == "ESX" then
         local xPlayer = ESX.GetPlayerFromId(src)
         xPlayer.removeAccountMoney(account,amount)
