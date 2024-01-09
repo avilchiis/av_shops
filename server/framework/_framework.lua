@@ -31,19 +31,25 @@ function removeMoney(src, account, amount)
     end
 end
 
-function giveItems(src,itemList)
-    if Config.Framework == "QBCore" then
-        local Player = QBCore.Functions.GetPlayer(src)
-        if Player then
-            for k, v in pairs(itemList) do
-                Player.Functions.AddItem(v['name'],v['amount'])
-            end
+function giveItems(src, itemList)
+    if GetResourceState('ox_inventory') ~= 'missing' then
+        for _, v in pairs(itemList) do
+            exports['ox_inventory']:AddItem(src, v['name'], v['amount'], v['metadata'] or nil)
         end
-    elseif Config.Framework == "ESX" then
-        local xPlayer = ESX.GetPlayerFromId(src)
-        if xPlayer then
-            for _, v in pairs(itemList) do
-                xPlayer.addInventoryItem(v['name'], v['amount'])
+    else
+        if Config.Framework == "QBCore" then
+            local Player = QBCore.Functions.GetPlayer(src)
+            if Player then
+                for k, v in pairs(itemList) do
+                    Player.Functions.AddItem(v['name'],v['amount'], v['metadata'] or nil)
+                end
+            end
+        elseif Config.Framework == "ESX" then
+            local xPlayer = ESX.GetPlayerFromId(src)
+            if xPlayer then
+                for _, v in pairs(itemList) do
+                    xPlayer.addInventoryItem(v['name'], v['amount'], v['metadata'] or nil)
+                end
             end
         end
     end

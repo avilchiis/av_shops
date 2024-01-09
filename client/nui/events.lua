@@ -15,19 +15,23 @@ RegisterNetEvent("av_shops:open", function(index)
     data['categories'] = {}
     for k, v in pairs(shop['categories']) do
         if v['canAccess']() then
-            local index = #data['categories'] + 1
+            local indext = #data['categories'] + 1
             data['categories'][index] = {
-                type = v['type'],
-                header = v['header'], 
-                subheader = v['subheader'], 
-                icon = v['icon'], 
+                type = v.type,
+                header = v.header, 
+                subheader = v.subheader, 
+                icon = v.icon, 
             }
         end
     end
     data['products'] = {}
-    for k, v in pairs(shop['items']) do
-        v['image'] = getImage(v['name'])
-        local index = #data['products'] + 1
+    for _, v in pairs(shop['items']) do
+        if v.metadata and v.metadata.image then
+            v['image'] = getImage(v.metadata.image)
+        else
+            v['image'] = getImage(v.name)
+        end
+        local indext = #data['products'] + 1
         data['products'][index] = v
     end
     data['lang'] = UILang

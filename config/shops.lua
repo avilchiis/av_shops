@@ -62,6 +62,7 @@ Config.Shops = {
         items = {
             {name = "water", label = "Water", price = 3, type = "drinks"},
             {name = "sandwich", label = "Sandwich", price = 2, type = "food"},
+            {name = "bun", label = "Bun", metadata = { image = 'burgerbun' }, price = 2, type = "food"},
         }
     }
 
