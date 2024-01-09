@@ -15,7 +15,8 @@ lib.callback.register('av_shops:purchase', function(source, account, cart)
             total += (v['price'] * v['amount'])
             products[#products+1] = {
                 name = v['name'],
-                amount = v['amount']
+                amount = v['amount'],
+                metadata = v['metadata'] or nil,
             }
         end
         if myMoney >= total then
